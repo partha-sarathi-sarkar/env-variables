@@ -1,0 +1,14 @@
+[2026-01-14T14:35:53.174Z] Repository: partha-sarathi-sarkar/env-variables
+[2026-01-14T14:35:53.175Z] Token: github_********
+[2026-01-14T14:35:53.175Z] Deployment started
+[2026-01-14T14:35:53.175Z] Target environment: dev -> development
+[2026-01-14T14:35:53.175Z] Processing environment: development
+[2026-01-14T14:35:53.596Z]   Existing variables: 0, Desired variables: 5
+[2026-01-14T14:35:53.596Z]   Skipped API_URL (no value change)
+[2026-01-14T14:35:53.597Z]   Skipped DB_HOST (no value change)
+[2026-01-14T14:35:53.597Z]   Skipped DB_PORT (no value change)
+[2026-01-14T14:35:53.597Z]   Skipped NODE_ENV (no value change)
+[2026-01-14T14:35:53.597Z]   Skipped REDIS_URL (no value change)
+[2026-01-14T14:35:53.597Z]   Summary for development: Updated 0, Created 0, Deleted 0, Skipped 5
+[2026-01-14T14:35:53.599Z] Final summary: Updated 0, Created 0, Deleted 0, Skipped 5
+[2026-01-14T14:35:53.599Z] Deployment complete

@@ -1,0 +1,25 @@
+{
+  "name": "env-github",
+  "version": "1.0.0",
+  "type": "module",
+   "scripts": {
+    "deploy:all": "npx tsx src/app.ts all",
+    "deploy:dev": "npx tsx src/app.ts dev",
+    "deploy:stag": "npx tsx src/app.ts stag",
+    "deploy:qa": "npx tsx src/app.ts qa",
+    "deploy:prod": "npx tsx src/app.ts prod",
+    "deploy:dev-dry": "DRY_RUN=true npx tsx src/app.ts dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@octokit/rest": "^22.0.1",
+    "@types/node": "^24.10.1",
+    "tsx": "^4.21.0"
+  }
+}
