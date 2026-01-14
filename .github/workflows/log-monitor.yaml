@@ -1,0 +1,78 @@
+name: Latest Logfile Monitor & Update README
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Every 30 minutes
+  workflow_dispatch:
+  push:
+    paths: ['logs/**', 'src/**']
+
+jobs:
+  monitor-and-update:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    # Generate your exact log format using Logger
+    - name: Generate logs with your Logger
+      run: |
+        npx tsx -e "
+          import { Logger } from './src/logger.js';
+          const logger = new Logger('ghp_1234567890abcdef');
+          logger.log('Test log entry');
+          logger.logConfig({ owner: '${{ github.repository_owner }}', repo: '${{ github.event.repository.name }}' });
+          await logger.saveToFile();
+        "
+    
+    # Find latest logfile-YYYY-MM-DD.log
+    - name: Extract latest log summary
+      id: loginfo
+      run: |
+        cd logs
+        LATEST_LOG=$(ls -t logfile-*.log | head -n1)
+        LINE_COUNT=$(wc -l < "$LATEST_LOG" 2>/dev/null || echo 0)
+        FILE_SIZE=$(du -h "$LATEST_LOG" | cut -f1 2>/dev/null || echo 0B)
+        LAST_MODIFIED=$(stat -c %y "$LATEST_LOG" 2>/dev/null || echo 'No logs')
+        LAST_LINES=$(tail -5 "$LATEST_LOG" 2>/dev/null || echo 'No logs yet')
+        
+        echo "log-file=$LATEST_LOG" >> $GITHUB_OUTPUT
+        echo "line-count=$LINE_COUNT" >> $GITHUB_OUTPUT
+        echo "file-size=$FILE_SIZE" >> $GITHUB_OUTPUT
+        echo "last-modified=$LAST_MODIFIED" >> $GITHUB_OUTPUT
+        echo "last-lines<<EOF" >> $GITHUB_OUTPUT
+        $LAST_LINES
+        EOF
+    
+    # Update README with YOUR log format
+    - name: Update README with latest logfile
+      run: |
+        sed -i 's|<!-- LOG-STATUS-START -->.*<!-- LOG-STATUS-END -->|<!-- LOG-STATUS-START -->\n\
+**🗂️ Latest: \`${{ steps.loginfo.outputs.log-file }}\`**\n\
+\n\
+| Metric | Value |\n\
+|--------|-------|\n\
+| 📊 Lines | ${{ steps.loginfo.outputs.line-count }} |\n\
+| 📏 Size  | ${{ steps.loginfo.outputs.file-size }} |\n\
+| 🕐 Updated | ${{ steps.loginfo.outputs.last-modified }} |\n\
+\n\
+**📄 Last 5 Lines:**\n\
+\`\`\`\n\
+${{ steps.loginfo.outputs.last-lines }}\n\
+\`\`\`\n\
+<!-- LOG-STATUS-END -->|' README.md
+    
+    # Auto-commit
+    - name: Commit README update
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: "📊 Update README: ${{ steps.loginfo.outputs.log-file }} (#${{ github.run_number }})"
