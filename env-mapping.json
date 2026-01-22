@@ -1,0 +1,7 @@
+{
+  "dev": "dev",
+  "stag": "staging",
+  "qa": "qa",
+  "prod": "production",
+  "idev": "idev"
+}

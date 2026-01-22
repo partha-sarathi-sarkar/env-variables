@@ -1,35 +1,24 @@
 {
-  "owner": "partha-sarathi-sarkar",
-  "repo": "env-variables",
-  "environments": {
-    "development": {
-      "API_URL": "http://localhost:3000",
-      "DB_HOST": "localhost",
-      "DB_PORT": "5432",
-      "NODE_ENV": "development",
-      "REDIS_URL": "redis://localhost:6379"
-    },
-    "staging": {
-      "API_URL": "https://api.staging.example.com",
-      "DB_HOST": "staging-db.example.com",
-      "DB_PORT": "5432",
-      "NODE_ENV": "staging",
-      "REDIS_URL": "redis://staging-redis:6379"
-    },
-    "qa": {
-      "API_URL": "https://api.qa.example.com",
-      "DB_HOST": "qa-db.example.com",
-      "DB_PORT": "5432",
-      "NODE_ENV": "qa",
-      "REDIS_URL": "redis://qa-redis:6379"
-    },
-    "production": {
-      "API_URL": "https://api.prod.example.com",
-      "DB_HOST": "prod-db.example.com",
-      "DB_PORT": "5432",
-      "NODE_ENV": "production",
-      "REDIS_URL": "redis://prod-redis:6379"
-    }
+  "dev": {
+    "env": "dev",
+    "checksum": "96d9b28639335ea7699b416b4e267e7354b8dddd37b7869faa6fb393d16ed835",
+    "lastUpdated": "2026-01-22T21:35:43.672Z",
+    "variables": [
+      "API_URL",
+      "DB_HOST",
+      "Token",
+      "newone"
+    ]
   },
-  "lastUpdated": "2026-01-14T14:48:28.323Z"
+  "idev": {
+    "env": "idev",
+    "checksum": "c44c5b522a7a213c25dab2b55bcb301d724fc3eed27a71c6b53356f4baecd420",
+    "lastUpdated": "2026-01-22T21:33:20.855Z",
+    "variables": [
+      "API_URL",
+      "DB_HOST",
+      "newone",
+      "Token"
+    ]
+  }
 }

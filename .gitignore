@@ -1,6 +1,7 @@
 # Ignore config with sensitive data
 config.json
 token.txt
+.env
 
 
 node_modules/
